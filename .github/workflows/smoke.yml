@@ -1,0 +1,25 @@
+name: smoke
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write build log
+        run: |
+          mkdir -p out
+          echo 'SMOKE-DEMO build checkpoint' > out/build.log
+          cat out/build.log
+
+      - name: Upload build log artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: out/build.log
+
+      - name: Simulated failure
+        run: |
+          echo 'SMOKE-DEMO simulated failure'
+          exit 1
